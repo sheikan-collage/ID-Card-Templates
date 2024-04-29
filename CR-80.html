@@ -4,80 +4,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <title>{{Student Id Card}}</title>
 </head>
 
 <body>
-  <div class="card-container card-front">
-    <div class="watermark-container">
-      <div class="front-card__top-bar"></div>
-      <div class="image"></div>
-    </div>
-    <div class="content" style="padding: 2mm;">
-      <table width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-          <td style="text-align: center;">
-            <img src="./logo.png" alt="Sheikan Logo" class="logo">
-          </td>
-          <td style="text-align: center;">
-            <p class="bold">كلية شيكان - برنامج الطب والجراحة</p>
-            <p class="bold">2024-2025</p>
-          </td>
-          <td width="0mm"></td>
-        </tr>
-      </table>
-      <br>
-      <div>
+  <div id="app">
+    <div class="card-container card-front">
+      <div class="watermark-container">
+        <div class="front-card__top-bar" :class="topBarBgClass"></div>
+        <div class="image"></div>
+      </div>
+      <div class="content" style="padding: 2mm;">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
-            <td>
-              <table width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td>الإسم : فلان بن علان</td>
-                </tr>
-                <tr>
-                  <td>الرقم الجامعي : 5421897</td>
-                </tr>
-                <tr>
-                  <td>الدفعة : الأولى</td>
-                </tr>
-                <tr>
-                  <td>السنة الدراسية : الثانية</td>
-                </tr>
-              </table>
+            <td style="text-align: center;">
+              <img src="./logo.png" alt="Sheikan Logo" class="logo">
             </td>
-            <td width="40mm">
-              <div style="
-              background-color: white; width: 0.85in; height: 0.85in;
-              border-radius: 2mm;box-shadow: 0px 0px 3px #CCCC;
-              background-image: url('student.jpg');
-              background-repeat: no-repeat;
-              background-position: center center;
-              background-size: cover;
-              "></div>
+            <td>
+              <div style="display: inline-block; text-align: center; margin-right: 2mm;">
+                <p class="bold">كلية شيكان - برنامج {{collegeName}}</p>
+                <p class="bold">2024-2025</p>
+              </div>
             </td>
           </tr>
         </table>
-
+        <br>
+        <div class="bold">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td>الإسم : {{student.name}}</td>
+                  </tr>
+                  <tr>
+                    <td>الرقم الجامعي : {{student.u_no}}</td>
+                  </tr>
+                  <tr>
+                    <td>الدفعة : {{student.batch}}</td>
+                  </tr>
+                  <tr>
+                    <td>السنة الدراسية : {{student.level}}</td>
+                  </tr>
+                </table>
+              </td>
+              <td width="40mm">
+                <div class="student-picture" :style="{
+                  backgroundImage: `url('${student.picture}')`
+                }"></div>
+              </td>
+            </tr>
+          </table>
+          <p style="text-align: center; margin-top: 1mm; align-items: center;">
+            <span style="margin-left: 4mm;">التوقيع : </span>
+            <img src="./sig2.webp" alt="signature" style="width: 10mm; vertical-align: middle;">
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="card-container card-back">
-    <div class="watermark-container">
-      <div class="overlay"></div>
-      <div class="image"></div>
-    </div>
-    <div class="content">
-      <ul style="padding-left: 5mm;">
-        <li>الإنضباط واحترام نظم الكلية ولوائحها سمة حضارية مميزة لكل طالب جامعي</li>
-        <li>تقدم عند الطلب </li>
-        <li>
-          عند الفقدان يجب تبليغ الحرس
-          أو أقرب مركز شرطة
-        </li>
-      </ul>
-      <div class="card-bar">
-        <img src="./shickan.png" alt="Shiekan Logo" class="end-image">
+    <div class="card-container card-back">
+      <div class="watermark-container">
+        <div class="overlay"></div>
+        <div class="image"></div>
+      </div>
+      <div class="content bold">
+        <ul style="padding-left: 5mm;">
+          <li>الإنضباط واحترام نظم الكلية ولوائحها سمة حضارية مميزة لكل طالب جامعي</li>
+          <li>تقدم عند الطلب </li>
+          <li>
+            عند الفقدان يجب تبليغ الحرس
+            أو أقرب مركز شرطة
+          </li>
+        </ul>
+        <div class="card-bar">
+          <img src="./shickan.png" alt="Shiekan Logo" class="end-image">
+        </div>
       </div>
     </div>
   </div>
@@ -102,25 +104,45 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /** Medicine **/
+    clip-path: polygon(100% 0%, 0% 0%, 0.00% 27.60%, 2.00% 28.67%, 4.00% 29.87%, 6.00% 31.20%, 8.00% 32.65%, 10.00% 34.22%, 12.00% 35.89%, 14.00% 37.67%, 16.00% 39.54%, 18.00% 41.51%, 20.00% 43.55%, 22.00% 45.66%, 24.00% 47.84%, 26.00% 50.07%, 28.00% 52.35%, 30.00% 54.67%, 32.00% 57.02%, 34.00% 59.38%, 36.00% 61.76%, 38.00% 64.14%, 40.00% 66.50%, 42.00% 68.85%, 44.00% 71.17%, 46.00% 73.46%, 48.00% 75.70%, 50.00% 77.88%, 52.00% 80.00%, 54.00% 82.05%, 56.00% 84.03%, 58.00% 85.91%, 60.00% 87.70%, 62.00% 89.38%, 64.00% 90.96%, 66.00% 92.43%, 68.00% 93.77%, 70.00% 94.99%, 72.00% 96.07%, 74.00% 97.02%, 76.00% 97.84%, 78.00% 98.51%, 80.00% 99.03%, 82.00% 99.41%, 84.00% 99.65%, 86.00% 99.73%, 88.00% 99.66%, 90.00% 99.45%, 92.00% 99.08%, 94.00% 98.57%, 96.00% 97.92%, 98.00% 97.12%, 100.00% 96.18%);
+  }
+
+  .front-card__top-bar--medicine-bg {
     background: rgb(218, 223, 231);
     background: -moz-linear-gradient(135deg, rgba(218, 223, 231, 1) 0%, rgba(32, 67, 209, 1) 100%);
     background: -webkit-linear-gradient(135deg, rgba(218, 223, 231, 1) 0%, rgba(32, 67, 209, 1) 100%);
     background: linear-gradient(135deg, rgba(218, 223, 231, 1) 0%, rgba(32, 67, 209, 1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dadfe7", endColorstr="#2043d1", GradientType=1);
-    /** Nursing **/
-    /* background: rgb(218, 223, 231);
+
+  }
+
+  .front-card__top-bar--nursing-bg {
+    background: rgb(218, 223, 231);
     background: -moz-linear-gradient(135deg, rgba(218, 223, 231, 1) 0%, rgba(209, 32, 32, 1) 100%);
     background: -webkit-linear-gradient(135deg, rgba(218, 223, 231, 1) 0%, rgba(209, 32, 32, 1) 100%);
     background: linear-gradient(135deg, rgba(218, 223, 231, 1) 0%, rgba(209, 32, 32, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dadfe7", endColorstr="#d12020", GradientType=1); */
-    /** Radiology **/
-    /* background: rgb(218,223,231);
-    background: -moz-linear-gradient(135deg, rgba(218,223,231,1) 0%, rgba(32,209,35,1) 100%);
-    background: -webkit-linear-gradient(135deg, rgba(218,223,231,1) 0%, rgba(32,209,35,1) 100%);
-    background: linear-gradient(135deg, rgba(218,223,231,1) 0%, rgba(32,209,35,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dadfe7",endColorstr="#20d123",GradientType=1);  */
-    clip-path: polygon(100% 0%, 0% 0%, 0.00% 27.60%, 2.00% 28.67%, 4.00% 29.87%, 6.00% 31.20%, 8.00% 32.65%, 10.00% 34.22%, 12.00% 35.89%, 14.00% 37.67%, 16.00% 39.54%, 18.00% 41.51%, 20.00% 43.55%, 22.00% 45.66%, 24.00% 47.84%, 26.00% 50.07%, 28.00% 52.35%, 30.00% 54.67%, 32.00% 57.02%, 34.00% 59.38%, 36.00% 61.76%, 38.00% 64.14%, 40.00% 66.50%, 42.00% 68.85%, 44.00% 71.17%, 46.00% 73.46%, 48.00% 75.70%, 50.00% 77.88%, 52.00% 80.00%, 54.00% 82.05%, 56.00% 84.03%, 58.00% 85.91%, 60.00% 87.70%, 62.00% 89.38%, 64.00% 90.96%, 66.00% 92.43%, 68.00% 93.77%, 70.00% 94.99%, 72.00% 96.07%, 74.00% 97.02%, 76.00% 97.84%, 78.00% 98.51%, 80.00% 99.03%, 82.00% 99.41%, 84.00% 99.65%, 86.00% 99.73%, 88.00% 99.66%, 90.00% 99.45%, 92.00% 99.08%, 94.00% 98.57%, 96.00% 97.92%, 98.00% 97.12%, 100.00% 96.18%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dadfe7", endColorstr="#d12020", GradientType=1);
+  }
+
+  .front-card__top-bar--radiology-bg {
+    background: rgb(218, 223, 231);
+    background: -moz-linear-gradient(135deg, rgba(218, 223, 231, 1) 0%, rgba(32, 209, 35, 1) 100%);
+    background: -webkit-linear-gradient(135deg, rgba(218, 223, 231, 1) 0%, rgba(32, 209, 35, 1) 100%);
+    background: linear-gradient(135deg, rgba(218, 223, 231, 1) 0%, rgba(32, 209, 35, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dadfe7", endColorstr="#20d123", GradientType=1);
+  }
+
+
+  .student-picture {
+
+    background-color: white;
+    width: 0.85in;
+    height: 0.85in;
+    border-radius: 2mm;
+    box-shadow: 0px 0px 3px #CCCC;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
   }
 
   p {
@@ -129,7 +151,7 @@
   }
 
   .card-container {
-    width: 3.375in;
+    width: 3.385in;
     height: 2.125in;
     overflow: hidden;
   }
@@ -174,11 +196,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgb(218, 223, 231);
+    /* background: rgb(218, 223, 231);
     background: -moz-radial-gradient(circle, rgba(218, 223, 231, 1) 0%, rgba(32, 67, 209, 1) 100%);
     background: -webkit-radial-gradient(circle, rgba(218, 223, 231, 1) 0%, rgba(32, 67, 209, 1) 100%);
     background: radial-gradient(circle, rgba(218, 223, 231, 1) 0%, rgba(32, 67, 209, 1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dadfe7", endColorstr="#2043d1", GradientType=1);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dadfe7", endColorstr="#2043d1", GradientType=1); */
+    background: rgb(218, 223, 231);
+    background: -moz-radial-gradient(circle, rgba(218, 223, 231, 1) 0%, rgba(32, 41, 209, 0.0921100862219888) 100%);
+    background: -webkit-radial-gradient(circle, rgba(218, 223, 231, 1) 0%, rgba(32, 41, 209, 0.0921100862219888) 100%);
+    background: radial-gradient(circle, rgba(218, 223, 231, 1) 0%, rgba(32, 41, 209, 0.0921100862219888) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#dadfe7", endColorstr="#2029d1", GradientType=1);
   }
 
   .card-back .watermark-container .image {
@@ -189,7 +216,7 @@
     background-size: cover;
     width: 100%;
     height: 100%;
-    opacity: 0.1;
+    opacity: 0.4;
     top: -53.98mm;
     left: 0;
   }
@@ -202,10 +229,71 @@
     background-size: contain;
     width: 100%;
     height: 50%;
-    opacity: 0.45;
+    opacity: 0.60;
     top: 0;
     left: 0;
   }
 </style>
+
+<script>
+  const { createApp, ref } = Vue
+
+  createApp({
+    setup() {
+      const college = ref('$college')
+      const collegeName = ref('')
+      const student = ref({
+        name: '$name',
+        u_no: '$u_no',
+        level: '$level',
+        batch: '$',
+        picture: '$photo',
+      });
+      const topBarBgClass = ref({
+        'front-card__top-bar--medicine-bg': false,
+        'front-card__top-bar--nursing-bg': false,
+        'front-card__top-bar--radiology-bg': false,
+      })
+      
+
+      switch (college.value.trim()) {
+        case 'الطب':
+          collegeName.value = 'الطب والجراحة';
+          topBarBgClass.value = {
+            'front-card__top-bar--medicine-bg': true,
+            'front-card__top-bar--nursing-bg': false,
+            'front-card__top-bar--radiology-bg': false,
+          }
+          break;
+        case 'التمريض':
+          collegeName.value = 'علوم التمريض';
+          topBarBgClass.value = {
+            'front-card__top-bar--medicine-bg': false,
+            'front-card__top-bar--nursing-bg': true,
+            'front-card__top-bar--radiology-bg': false,
+          }
+          break;
+        case 'الأشعة':
+          collegeName.value = 'علوم الأشعة التشخيصية';
+          topBarBgClass.value = {
+            'front-card__top-bar--medicine-bg': false,
+            'front-card__top-bar--nursing-bg': false,
+            'front-card__top-bar--radiology-bg': true,
+          }
+          break;
+        default:
+          break;
+      }
+
+
+      return {
+        college,
+        collegeName,
+        student,
+        topBarBgClass
+      }
+    }
+  }).mount('#app')
+</script>
 
 </html>
