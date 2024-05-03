@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style.css">
+  </link>
+  <script src="https://unpkg.com/vue@3.4.26/dist/vue.global.js"></script>
+  <title>{{Student Id Card}}</title>
+</head>
+
+<body>
+  <div id="app" style="display: inline-block; align-self: center;" contenteditable>
+    <div class="card-container card-front">
+      <div class="watermark-container">
+        <div class="front-card__top-bar" :class="topBarBgClass"></div>
+        <div class="image"></div>
+      </div>
+      <div class="content" style="padding: 2mm">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="text-align: center">
+              <img :src="logoImage" alt="Sheikan Logo" class="logo" />
+            </td>
+            <td>
+              <div style="
+                    display: inline-block;
+                    text-align: center;
+                    margin-right: 2mm;
+                  ">
+                <p class="bold">كلية شيكان - برنامج
+                  <select class="bold transparent-input" v-model="college" :style="{
+                    color: college === '-1'? '#AAA' : '',
+                  }">
+                    <option value="-1" disabled selected> --- اختر البرنامج --- </option>
+                    <option style="color: black;" value="الطب">الطب والجراحة</option>
+                    <option style="color: black;" value="التمريض">علوم التمريض</option>
+                    <option style="color: black;" value="الأشعة">علوم الأشعة التشخيصية</option>
+                  </select>
+                </p>
+                <p class="bold">2024-2025</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <br />
+        <div class="bold">
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td>
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td>الإسم :
+                      <span>
+                        <input required pattern="\S+.*" placeholder="أكتب اسم الطالب" style="width: 45mm;"
+                          class="bold transparent-input" v-model="student.name">
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>الرقم الجامعي :
+                      <span>
+                        <input required pattern="\S+.*" placeholder="أكتب الرقم الجامعي" style="width: 35mm;"
+                          class="bold transparent-input" v-model="student.u_no">
+                      </span>
+                    </td>
+              </td>
+            </tr>
+            <tr>
+              <td>الدفعة :
+                <span>
+                  <!-- <input required pattern="\S+.*" placeholder="أكتب الدفعة" style="width: 45mm;"
+                    class="bold transparent-input" v-model="student.batch"> -->
+
+                  <select class="bold transparent-input" v-model="student.batch" :style="{
+                      color: student.batch === '-1'? '#AAA' : '',
+                    }">
+                    <option value="-1" disabled selected> --- اختر الدفعة --- </option>
+                    <option style="color: black;" value="2019">2019</option>
+                    <option style="color: black;" value="2020">2020</option>
+                    <option style="color: black;" value="2021">2021</option>
+                    <option style="color: black;" value="2022">2022</option>
+                  </select>
+                </span>
+              </td>
+
+            </tr>
+            <tr>
+              <td>السنة الدراسية :
+                <span>
+                  <!-- <input required pattern="\S+.*" placeholder="أكتب السنة الدراسية" style="width: 30mm;"
+                    class="bold transparent-input" v-model="student.level"> -->
+                  <select class="bold transparent-input" v-model="student.level" :style="{
+                      color: student.level === '-1'? '#AAA' : '',
+                    }">
+                    <option value="-1" disabled selected> --- اختر السنة  --- </option>
+                    <option style="color: black;" value="الأولى">الأولى</option>
+                    <option style="color: black;" value="الثانية">الثانية</option>
+                    <option style="color: black;" value="الثالثة">الثالثة</option>
+                    <option style="color: black;" value="الرابعة">الرابعة</option>
+                    <option style="color: black;" value="الخامسة">الخامسة</option>
+                  </select>
+                </span>
+              </td>
+            </tr>
+          </table>
+          </td>
+          <td width="40mm">
+            <input hidden id="student.picture.input" type="file" accept="image/*;capture=camera"
+              @change="onPhotoChange" />
+            <label for="student.picture.input">
+              <div class="student-picture" :style="{
+                    cursor: 'pointer',
+                    backgroundImage: `url(${student.picture})`
+                  }"></div>
+            </label>
+          </td>
+          </tr>
+          </table>
+          <p style="text-align: center; margin-top: 1mm; align-items: center">
+            <span style="margin-left: 4mm">التوقيع : </span>
+            <img :src="sigImage" alt="signature" style="width: 10mm; vertical-align: middle" />
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="card-container card-back">
+      <div class="watermark-container">
+        <div class="overlay"></div>
+        <div class="image"></div>
+      </div>
+      <div class="content bold">
+        <ul style="padding-left: 5mm">
+          <li>
+            الإنضباط واحترام نظم الكلية ولوائحها سمة حضارية مميزة لكل طالب
+            جامعي
+          </li>
+          <li>تقدم عند الطلب</li>
+          <li>عند الفقدان يجب تبليغ الحرس أو أقرب مركز شرطة</li>
+        </ul>
+        <div class="card-bar">
+          <img :src="shickanImage" alt="Shiekan Logo" class="end-image" />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script src="./imagesBase64.js"></script>
+
+<script src="./index.js"></script>
+
+</html>
